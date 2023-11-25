@@ -6,7 +6,7 @@ import { Formik } from 'formik';
 import {
   useGetContactsQuery,
   useCreateContactMutation,
-} from 'redux/sliceContacts';
+} from '..//../redux/spliceContacts';
 
 import { Button, FormUs, Input, LabelIn } from './phonebookFrom.styled';
 
