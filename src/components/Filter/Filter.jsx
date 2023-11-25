@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
-
 import { useDispatch } from 'react-redux';
+
 import { filterContacts } from 'redux/sliceFilter';
 import { FilterBox, FilterInp, Label } from './filter.styled';
 
