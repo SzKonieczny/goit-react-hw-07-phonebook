@@ -1,9 +1,14 @@
 import PropTypes from 'prop-types';
+import toast from 'react-hot-toast';
+
 import { Formik } from 'formik';
+
+import {
+  useGetContactsQuery,
+  useCreateContactMutation,
+} from 'redux/sliceContacts';
+
 import { Button, FormUs, Input, LabelIn } from './phonebookFrom.styled';
-import { useDispatch, useSelector } from 'react-redux';
-import { addMyContact, getContacts } from '..//..//redux/spliceContacts';
-import { nanoid } from 'nanoid';
 
 const initialValues = {
   name: '',
@@ -11,17 +16,18 @@ const initialValues = {
 };
 
 export const PhonebookForm = () => {
-  const dispatch = useDispatch();
-
-  const contacts = useSelector(getContacts);
+  const { data: contacts, isFetching } = useGetContactsQuery();
+  const [createContact] = useCreateContactMutation();
 
   const userSubmit = (values, { resetForm }) => {
     if (contacts.find(contact => contact.name === values.name)) {
-      return alert(`${values.name} is already is contacts`);
+      return toast.error(`${values.name} is already is contacts`);
     }
-    values.id = nanoid(5);
 
-    dispatch(addMyContact(values));
+    createContact(values);
+    if (!isFetching) {
+      toast.success(`Contact ${values.name} has been added`);
+    }
 
     resetForm();
   };
