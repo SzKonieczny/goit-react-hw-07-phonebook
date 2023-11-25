@@ -1,50 +1,35 @@
-import { ContactIt, Item, ListBox } from './contactList.styled';
-import { IconButton } from '..//IconBtn/IconBtn';
-import { MdDeleteOutline } from 'react-icons/md';
-import { useDispatch, useSelector } from 'react-redux';
-import { deleteMyContact, getContacts, getFilter } from '../../redux';
-
-// import { deleteMyContact, getContacts } from 'redux/sliceContacts';
-// import { getFilter } from 'redux/sliceFilter';
+import { Spiner } from 'components/Spiner/Spiner';
+import { ListBox } from './contactList.styled';
+import { useSelector } from 'react-redux';
+import { useGetContactsQuery } from 'redux/sliceContacts';
+import { getFilter } from 'redux/sliceFilter';
+import { ContactsItems } from 'components/ContactsItems/ContactsItems';
 
 export const ContactList = () => {
-  const dispatch = useDispatch();
+  const { data: contacts, isFetching } = useGetContactsQuery();
 
-  const contacts = useSelector(getContacts);
   const filter = useSelector(getFilter);
-
-  const deleteContact = idContact => {
-    dispatch(deleteMyContact(idContact));
-  };
 
   const findContacts = () => {
     const normalizedFilter = filter.toLowerCase();
-    return contacts.filter(contact =>
-      contact.name.toLowerCase().includes(normalizedFilter)
-    );
+
+    if (contacts) {
+      return contacts.filter(contact =>
+        contact.name.toLowerCase().includes(normalizedFilter)
+      );
+    }
   };
 
   const filteredContacts = findContacts();
 
   return (
     <ListBox>
+      {isFetching && <Spiner />}
       <ul>
-        {filteredContacts.map(({ id, name, number }) => {
-          return (
-            <Item key={id}>
-              <ContactIt>
-                {name}: {number}
-              </ContactIt>
-              <IconButton
-                type="button"
-                onClick={() => deleteContact(id)}
-                aria-label="Delete contact"
-              >
-                <MdDeleteOutline size="20px" />
-              </IconButton>
-            </Item>
-          );
-        })}
+        {contacts &&
+          filteredContacts.map(contact => (
+            <ContactsItems key={contact.id} {...contact} />
+          ))}
       </ul>
     </ListBox>
   );
