@@ -1,5 +1,11 @@
 import styled from '@emotion/styled';
 
+export const MainContainer = styled.div`
+  min-height: 100vh;
+  max-height: 100%;
+  padding: 10px;
+`;
+
 export const Title = styled.h1`
   font-weight: 700;
   text-align: center;
