@@ -1,9 +1,10 @@
+import { useSelector } from 'react-redux';
+
 import { Spiner } from 'components/Spiner/Spiner';
 import { ListBox } from './contactList.styled';
-import { useSelector } from 'react-redux';
-import { useGetContactsQuery } from 'redux/sliceContacts';
 import { getFilter } from 'redux/sliceFilter';
 import { ContactsItems } from 'components/ContactsItems/ContactsItems';
+import { useGetContactsQuery } from 'redux/sliceContacts';
 
 export const ContactList = () => {
   const { data: contacts, isFetching } = useGetContactsQuery();

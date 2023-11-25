@@ -1,8 +1,8 @@
-import { useDeleteContactMutation } from 'redux/sliceContacts';
-import { ContactIt, Item } from './contactsItems.styled';
-import { IconButton } from 'components/IconButton/IconButton';
+import { IconButton } from 'components/IconBtn/IconBtn';
 import { SpinerDelete } from 'components/Spiner/Spiner';
+import { ContactIt, Item } from './contactsItems.styled';
 import { MdDeleteOutline } from 'react-icons/md';
+import { useDeleteContactMutation } from 'redux/sliceContacts';
 
 export const ContactsItems = ({ id, name, phone }) => {
   const [deleteContact, { isLoading: isDeleting }] = useDeleteContactMutation();
